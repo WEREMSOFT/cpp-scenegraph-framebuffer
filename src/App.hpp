@@ -1,12 +1,14 @@
-#include "core/GenericRenderer.hpp"
+#include "core/UniversalRenderer.hpp"
+#include <string>
 
+using namespace weremsoft;
 class App
 {
-	GenericRenderer ur;
 	Uint32 oldTime = SDL_GetTicks();
 	Uint32 newTime;
 	double delta;
 	bool isRunning = true;
+	UniversalRenderer ur;
 
 public:
 	App()
@@ -30,25 +32,25 @@ public:
 			for (int i = 0; i < 800; ++i)
 				putPixel(i, i, 0, 255, 0);
 
-			if (keysJustPressed[SDL_SCANCODE_SPACE])
-				urDrawCircleFill((URPointI){100, 100}, 100, (URColor){255, 0, 0});
+			if (ur.keysJustPressed[SDL_SCANCODE_SPACE])
+				ur.DrawCircleFill((URPointI){100, 100}, 100, (URColor){255, 0, 0});
 			else
-				urDrawCircleFill((URPointI){100, 100}, 100, (URColor){0, 255, 0});
+				ur.DrawCircleFill((URPointI){100, 100}, 100, (URColor){0, 255, 0});
 
-			if (urIsMouseButtonJustPressed(SDL_BUTTON_LEFT))
-				urDrawCircleFill((URPointI){150, 100}, 100, (URColor){255, 0, 0});
+			if (ur.IsMouseButtonJustPressed(SDL_BUTTON_LEFT))
+				ur.DrawCircleFill((URPointI){150, 100}, 100, (URColor){255, 0, 0});
 			else
-				urDrawCircleFill((URPointI){150, 100}, 100, (URColor){0, 255, 0});
+				ur.DrawCircleFill((URPointI){150, 100}, 100, (URColor){0, 255, 0});
 
 			// s = urSpriteDrawTransparentAnimatedClipped(s, delta);
 
-			urPrintString((URPointI){100, 100}, "hello world!!", (URColor){255, 255, 0});
+			ur.PrintString((URPointI){100, 100}, std::string("hello world!!").c_str(), (URColor){255, 255, 0});
 
-			urPrintFPS(delta);
+			ur.PrintFPS(delta);
 
 			ur.EndFrame();
 
-			memset(keysJustPressed, 0, sizeof(bool) * 256);
+			memset(ur.keysJustPressed, 0, sizeof(bool) * 256);
 			SDL_Event event;
 			while (SDL_PollEvent(&event))
 			{
@@ -65,17 +67,17 @@ public:
 						isRunning = false;
 						break;
 					}
-					keysJustPressed[event.key.keysym.scancode] = true;
-					keys[event.key.keysym.scancode] = true;
+					ur.keysJustPressed[event.key.keysym.scancode] = true;
+					ur.keys[event.key.keysym.scancode] = true;
 					break;
 				case SDL_KEYUP:
-					keys[event.key.keysym.scancode] = false;
+					ur.keys[event.key.keysym.scancode] = false;
 					break;
 				case SDL_MOUSEBUTTONDOWN:
-					mouseButtons[event.button.button] = true;
+					ur.mouseButtons[event.button.button] = true;
 					break;
 				case SDL_MOUSEBUTTONUP:
-					mouseButtons[event.button.button] = false;
+					ur.mouseButtons[event.button.button] = false;
 					break;
 				}
 			}
