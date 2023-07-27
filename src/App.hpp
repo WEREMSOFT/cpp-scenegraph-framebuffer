@@ -33,18 +33,18 @@ public:
 				putPixel(i, i, 0, 255, 0);
 
 			if (ur.keysJustPressed[SDL_SCANCODE_SPACE])
-				ur.DrawCircleFill((URPointI){100, 100}, 100, (URColor){255, 0, 0});
+				ur.DrawCircleFill((PointI){100, 100}, 100, (Color){255, 0, 0});
 			else
-				ur.DrawCircleFill((URPointI){100, 100}, 100, (URColor){0, 255, 0});
+				ur.DrawCircleFill((PointI){100, 100}, 100, (Color){0, 255, 0});
 
 			if (ur.IsMouseButtonJustPressed(SDL_BUTTON_LEFT))
-				ur.DrawCircleFill((URPointI){150, 100}, 100, (URColor){255, 0, 0});
+				ur.DrawCircleFill((PointI){150, 100}, 100, (Color){255, 0, 0});
 			else
-				ur.DrawCircleFill((URPointI){150, 100}, 100, (URColor){0, 255, 0});
+				ur.DrawCircleFill((PointI){150, 100}, 100, (Color){0, 255, 0});
 
 			// s = urSpriteDrawTransparentAnimatedClipped(s, delta);
 
-			ur.PrintString((URPointI){100, 100}, std::string("hello world!!").c_str(), (URColor){255, 255, 0});
+			ur.PrintString((PointI){100, 100}, std::string("hello world!!").c_str(), (Color){255, 255, 0});
 
 			ur.PrintFPS(delta);
 

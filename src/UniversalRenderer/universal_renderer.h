@@ -37,40 +37,40 @@
 	typedef struct
 	{
 		unsigned char r, g, b;
-	} URColor;
+	} Color;
 
 #define UR_RED     \
-	(URColor)      \
+	(Color)      \
 	{              \
 		0xFF, 0, 0 \
 	}
 #define UR_WHITE         \
-	(URColor)            \
+	(Color)            \
 	{                    \
 		0xFF, 0xFF, 0xFF \
 	}
 #define UR_BLUE    \
-	(URColor)      \
+	(Color)      \
 	{              \
 		0, 0, 0xFF \
 	}
 #define UR_GREEN   \
-	(URColor)      \
+	(Color)      \
 	{              \
 		0, 0xFF, 0 \
 	}
 #define UR_PURPLE     \
-	(URColor)         \
+	(Color)         \
 	{                 \
 		0xFF, 0, 0xFF \
 	}
 #define UR_YELLOW     \
-	(URColor)         \
+	(Color)         \
 	{                 \
 		0xFF, 0xFF, 0 \
 	}
 #define UR_BLACK \
-	(URColor)    \
+	(Color)    \
 	{            \
 		0, 0, 0  \
 	}
@@ -78,12 +78,12 @@
 	typedef struct
 	{
 		int x, y;
-	} URPointI;
+	} PointI;
 
 	typedef struct
 	{
-		URPointI position;
-		URPointI size;
+		PointI position;
+		PointI size;
 	} URRectI;
 	// INPUT
 	// --- MOUSE
@@ -115,70 +115,70 @@
 #endif
 
 	// GRAPHICS
-	// void urClearScreen(URColor clearColor)
+	// void urClearScreen(Color clearColor)
 	// {
 	// 	for (int x = 0; x < UR_SCREEN_WIDTH; x++)
 	// 		for (int y = 0; y < UR_SCREEN_HEIGHT; y++)
 	// 		{
-	// 			URPointI p = (URPointI){x, y};
+	// 			PointI p = (PointI){x, y};
 	// 			UR_PUT_PIXEL(p.x, p.y, clearColor.r, clearColor.g, clearColor.b);
 	// 		}
 	// }
 
-	// void urDrawCircle(URPointI center, double radious, URColor color)
+	// void urDrawCircle(PointI center, double radious, Color color)
 	// {
 	// 	for (int i = center.x - radious; i <= center.x + radious; i++)
 	// 	{
 	// 		for (int j = center.y - radious; j <= center.y + radious; j++)
 	// 		{
-	// 			URPointI p = (URPointI){i, j};
+	// 			PointI p = (PointI){i, j};
 	// 			if (floor(sqrt(pow(center.x - i, 2) + pow(center.y - j, 2))) == radious)
 	// 				UR_PUT_PIXEL(p.x, p.y, color.r, color.g, color.b);
 	// 		}
 	// 	}
 	// }
 
-	// void urDrawCircleFill(URPointI center, double radious, URColor color)
+	// void urDrawCircleFill(PointI center, double radious, Color color)
 	// {
 
 	// 	for (int i = center.x - radious; i <= center.x + radious; i++)
 	// 	{
 	// 		for (int j = center.y - radious; j <= center.y + radious; j++)
 	// 		{
-	// 			URPointI p = (URPointI){i, j};
+	// 			PointI p = (PointI){i, j};
 	// 			if (floor(sqrt(pow(center.x - i, 2) + pow(center.y - j, 2))) <= radious)
 	// 				UR_PUT_PIXEL(p.x, p.y, color.r, color.g, color.b);
 	// 		}
 	// 	}
 	// }
 
-	// void urDrawSquare(URPointI topLeftCorner, URPointI size, URColor color)
+	// void urDrawSquare(PointI topLeftCorner, PointI size, Color color)
 	// {
 	// 	for (int i = fmax(topLeftCorner.x, 0); i <= topLeftCorner.x + size.x; i++)
 	// 	{
 	// 		for (int j = fmax(topLeftCorner.y, 0); j <= topLeftCorner.y + size.y; j++)
 	// 		{
-	// 			URPointI p = (URPointI){i, j};
+	// 			PointI p = (PointI){i, j};
 	// 			if (j == topLeftCorner.y || j == topLeftCorner.y + size.y || i == topLeftCorner.x || i == topLeftCorner.x + size.x)
 	// 				UR_PUT_PIXEL(p.x, p.y, color.r, color.g, color.b);
 	// 		}
 	// 	}
 	// }
 
-	// void urDrawSquareFill(URPointI topLeftCorner, URPointI size, URColor color)
+	// void urDrawSquareFill(PointI topLeftCorner, PointI size, Color color)
 	// {
 	// 	for (int i = topLeftCorner.x; i <= topLeftCorner.x + size.x; i++)
 	// 	{
 	// 		for (int j = topLeftCorner.y; j <= topLeftCorner.y + size.y; j++)
 	// 		{
-	// 			URPointI p = (URPointI){i, j};
+	// 			PointI p = (PointI){i, j};
 	// 			if (j >= topLeftCorner.y || j <= topLeftCorner.y + size.y || i >= topLeftCorner.x || i <= topLeftCorner.x + size.x)
 	// 				UR_PUT_PIXEL(p.x, p.y, color.r, color.g, color.b);
 	// 		}
 	// 	}
 	// }
 
-	// void urDrawLine(URPointI pointA, URPointI pointB, URColor color)
+	// void urDrawLine(PointI pointA, PointI pointB, Color color)
 	// {
 	// 	int dx = abs(pointB.x - pointA.x), sx = pointA.x < pointB.x ? 1 : -1;
 	// 	int dy = abs(pointB.y - pointA.y), sy = pointA.y < pointB.y ? 1 : -1;
@@ -437,7 +437,7 @@
 			 0b001100,
 			 0b001100}};
 
-	void urDrawCharacter(URPointI topLeftCorner, unsigned int letter, URColor color)
+	void urDrawCharacter(PointI topLeftCorner, unsigned int letter, Color color)
 	{
 		for (int i = 0; i < 5; i++)
 		{
@@ -449,7 +449,7 @@
 		}
 	}
 
-	void urPrintString(URPointI topLeftCorner, char *string, URColor color)
+	void urPrintString(PointI topLeftCorner, char *string, Color color)
 	{
 		size_t stringLen = strlen(string);
 
@@ -458,27 +458,27 @@
 			if (string[i] == '.')
 			{
 				int charOffset = 'z' - 'a' + 12;
-				urDrawCharacter((URPointI){topLeftCorner.x + i * 6, topLeftCorner.y}, charOffset, color);
+				urDrawCharacter((PointI){topLeftCorner.x + i * 6, topLeftCorner.y}, charOffset, color);
 				continue;
 			}
 
 			if (string[i] == '%')
 			{
 				int charOffset = 'z' - 'a' + 11;
-				urDrawCharacter((URPointI){topLeftCorner.x + i * 6, topLeftCorner.y}, charOffset, color);
+				urDrawCharacter((PointI){topLeftCorner.x + i * 6, topLeftCorner.y}, charOffset, color);
 				continue;
 			}
 
 			if (string[i] >= '0' && string[i] <= '9')
 			{
-				urDrawCharacter((URPointI){topLeftCorner.x + i * 6, topLeftCorner.y}, string[i] - '0', color);
+				urDrawCharacter((PointI){topLeftCorner.x + i * 6, topLeftCorner.y}, string[i] - '0', color);
 				continue;
 			}
 
 			if (string[i] >= 'a' && string[i] <= 'z')
 			{
 				int charOffset = string[i] - 'a' + 10;
-				urDrawCharacter((URPointI){topLeftCorner.x + i * 6, topLeftCorner.y}, charOffset, color);
+				urDrawCharacter((PointI){topLeftCorner.x + i * 6, topLeftCorner.y}, charOffset, color);
 				continue;
 			}
 		}
@@ -660,298 +660,298 @@
 // 		return Data;
 // 	}
 
-	typedef struct
-	{
-		bool isPlaying;
-		int frameWidth;
-		int frameHeight;
-		int t;
-		int currentFrame;
-		int frameCount;
-		float frameIncrement;
-		float frameRate;
-	} Animation;
+	// typedef struct
+	// {
+	// 	bool isPlaying;
+	// 	int frameWidth;
+	// 	int frameHeight;
+	// 	int t;
+	// 	int currentFrame;
+	// 	int frameCount;
+	// 	float frameIncrement;
+	// 	float frameRate;
+	// } Animation;
 
-	typedef struct
-	{
-		bool animated;
-		bool isFlipped;
-		Animation animation;
-		URPointI position;
-		URPointI center;
-		URPointI size;
-		URColor *imageData;
-	} URSprite;
+	// typedef struct
+	// {
+	// 	bool animated;
+	// 	bool isFlipped;
+	// 	Animation animation;
+	// 	PointI position;
+	// 	PointI center;
+	// 	PointI size;
+	// 	Color *imageData;
+	// } URSprite;
 
-	URSprite urSpriteCreate(char *file)
-	{
-		URSprite _this = {0};
-		int nrChannels;
+	// URSprite urSpriteCreate(char *file)
+	// {
+	// 	URSprite _this = {0};
+	// 	int nrChannels;
 
-		_this.imageData = (URColor *)urBMPLoad(file, &_this.size.x, &_this.size.y);
-		if (_this.imageData == NULL)
-		{
-			printf("Error loading image %s\n", file);
-			exit(-1);
-		}
-		return _this;
-	}
+	// 	_this.imageData = (Color *)urBMPLoad(file, &_this.size.x, &_this.size.y);
+	// 	if (_this.imageData == NULL)
+	// 	{
+	// 		printf("Error loading image %s\n", file);
+	// 		exit(-1);
+	// 	}
+	// 	return _this;
+	// }
 
-	void urSpriteDraw(URSprite _this)
-	{
-		for (int i = 0; i < _this.size.x; i++)
-		{
-			for (int j = 0; j < _this.size.y; j++)
-			{
-				URColor color = _this.imageData[j * _this.size.x + i];
-				UR_PUT_PIXEL(_this.position.x + i, _this.position.y + j, color.r, color.g, color.b);
-			}
-		}
-	}
+	// void urSpriteDraw(URSprite _this)
+	// {
+	// 	for (int i = 0; i < _this.size.x; i++)
+	// 	{
+	// 		for (int j = 0; j < _this.size.y; j++)
+	// 		{
+	// 			Color color = _this.imageData[j * _this.size.x + i];
+	// 			UR_PUT_PIXEL(_this.position.x + i, _this.position.y + j, color.r, color.g, color.b);
+	// 		}
+	// 	}
+	// }
 
-	void urSpriteDrawClipped(URSprite _this)
-	{
-		if (_this.isFlipped)
-		{
-			URPointI adjustedPosition = {_this.position.x - _this.center.x, _this.position.y + _this.center.y};
+	// void urSpriteDrawClipped(URSprite _this)
+	// {
+	// 	if (_this.isFlipped)
+	// 	{
+	// 		PointI adjustedPosition = {_this.position.x - _this.center.x, _this.position.y + _this.center.y};
 
-			int clippedWidth = fmin(adjustedPosition.x, _this.size.x);
-			int clippedHeight = fmin(_this.size.y,
-									 fmax(0, _this.size.y - (_this.size.y - UR_SCREEN_HEIGHT)));
+	// 		int clippedWidth = fmin(adjustedPosition.x, _this.size.x);
+	// 		int clippedHeight = fmin(_this.size.y,
+	// 								 fmax(0, _this.size.y - (_this.size.y - UR_SCREEN_HEIGHT)));
 
-			int clippedX = 0;
-			int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
+	// 		int clippedX = 0;
+	// 		int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
 
-			for (int j = clippedY; j < clippedHeight; j++)
-			{
-				for (int i = clippedX; i < clippedWidth; i++)
-				{
-					URColor color = _this.imageData[j * _this.size.x + i];
-					UR_PUT_PIXEL(adjustedPosition.x - i, adjustedPosition.y + j, color.r, color.g, color.b);
-				}
-			}
-		}
-		else
-		{
-			URPointI adjustedPosition = {_this.position.x + _this.center.x, _this.position.y + _this.center.y};
+	// 		for (int j = clippedY; j < clippedHeight; j++)
+	// 		{
+	// 			for (int i = clippedX; i < clippedWidth; i++)
+	// 			{
+	// 				Color color = _this.imageData[j * _this.size.x + i];
+	// 				UR_PUT_PIXEL(adjustedPosition.x - i, adjustedPosition.y + j, color.r, color.g, color.b);
+	// 			}
+	// 		}
+	// 	}
+	// 	else
+	// 	{
+	// 		PointI adjustedPosition = {_this.position.x + _this.center.x, _this.position.y + _this.center.y};
 
-			int clippedWidth = fmin(_this.size.x,
-									fmax(0, _this.size.x - (_this.size.x + adjustedPosition.x - UR_SCREEN_WIDTH)));
-			int clippedHeight = fmin(_this.size.y,
-									 fmax(0, _this.size.y - (_this.size.y + adjustedPosition.y - UR_SCREEN_HEIGHT)));
+	// 		int clippedWidth = fmin(_this.size.x,
+	// 								fmax(0, _this.size.x - (_this.size.x + adjustedPosition.x - UR_SCREEN_WIDTH)));
+	// 		int clippedHeight = fmin(_this.size.y,
+	// 								 fmax(0, _this.size.y - (_this.size.y + adjustedPosition.y - UR_SCREEN_HEIGHT)));
 
-			int clippedX = adjustedPosition.x < 0 ? -adjustedPosition.x : 0;
-			int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
+	// 		int clippedX = adjustedPosition.x < 0 ? -adjustedPosition.x : 0;
+	// 		int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
 
-			for (int j = clippedY; j < clippedHeight; j++)
-			{
-				for (int i = clippedX; i < clippedWidth; i++)
-				{
-					URColor color = _this.imageData[j * _this.size.x + i];
-					UR_PUT_PIXEL(adjustedPosition.x + i, adjustedPosition.y + j, color.r, color.g, color.b);
-				}
-			}
-		}
-	}
+	// 		for (int j = clippedY; j < clippedHeight; j++)
+	// 		{
+	// 			for (int i = clippedX; i < clippedWidth; i++)
+	// 			{
+	// 				Color color = _this.imageData[j * _this.size.x + i];
+	// 				UR_PUT_PIXEL(adjustedPosition.x + i, adjustedPosition.y + j, color.r, color.g, color.b);
+	// 			}
+	// 		}
+	// 	}
+	// }
 
-	void urSpriteDrawTransparent(URSprite _this)
-	{
-		if (_this.isFlipped)
-			for (int j = 0; j < _this.size.y; j++)
-			{
-				for (int i = 0; i < _this.size.x; i++)
-				{
-					URColor color = _this.imageData[j * _this.size.x + i];
-					if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
-						UR_PUT_PIXEL(_this.position.x + _this.size.x - i, _this.position.y + j, color.r, color.g, color.b);
-				}
-			}
-		else
-			for (int j = 0; j < _this.size.y; j++)
-			{
-				for (int i = 0; i < _this.size.x; i++)
-				{
-					URColor color = _this.imageData[j * _this.size.x + i];
-					if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
-						UR_PUT_PIXEL(_this.position.x + i, _this.position.y + j, color.r, color.g, color.b);
-				}
-			}
-	}
+	// void urSpriteDrawTransparent(URSprite _this)
+	// {
+	// 	if (_this.isFlipped)
+	// 		for (int j = 0; j < _this.size.y; j++)
+	// 		{
+	// 			for (int i = 0; i < _this.size.x; i++)
+	// 			{
+	// 				Color color = _this.imageData[j * _this.size.x + i];
+	// 				if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
+	// 					UR_PUT_PIXEL(_this.position.x + _this.size.x - i, _this.position.y + j, color.r, color.g, color.b);
+	// 			}
+	// 		}
+	// 	else
+	// 		for (int j = 0; j < _this.size.y; j++)
+	// 		{
+	// 			for (int i = 0; i < _this.size.x; i++)
+	// 			{
+	// 				Color color = _this.imageData[j * _this.size.x + i];
+	// 				if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
+	// 					UR_PUT_PIXEL(_this.position.x + i, _this.position.y + j, color.r, color.g, color.b);
+	// 			}
+	// 		}
+	// }
 
-	void urSpriteDrawTransparentClipped(URSprite _this)
-	{
-		if (_this.isFlipped)
-		{
-			URPointI adjustedPosition = {_this.position.x - _this.center.x, _this.position.y + _this.center.y};
+	// void urSpriteDrawTransparentClipped(URSprite _this)
+	// {
+	// 	if (_this.isFlipped)
+	// 	{
+	// 		PointI adjustedPosition = {_this.position.x - _this.center.x, _this.position.y + _this.center.y};
 
-			int clippedWidth = fmin(adjustedPosition.x, _this.size.x);
-			int clippedHeight = fmin(_this.size.y,
-									 fmax(0, _this.size.y - (_this.size.y - UR_SCREEN_HEIGHT)));
+	// 		int clippedWidth = fmin(adjustedPosition.x, _this.size.x);
+	// 		int clippedHeight = fmin(_this.size.y,
+	// 								 fmax(0, _this.size.y - (_this.size.y - UR_SCREEN_HEIGHT)));
 
-			int clippedX = 0;
-			int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
+	// 		int clippedX = 0;
+	// 		int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
 
-			for (int j = clippedY; j < clippedHeight; j++)
-			{
-				for (int i = clippedX; i < clippedWidth; i++)
-				{
-					URColor color = _this.imageData[j * _this.size.x + i];
-					if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
-						UR_PUT_PIXEL(adjustedPosition.x - i, adjustedPosition.y + j, color.r, color.g, color.b);
-				}
-			}
-		}
-		else
-		{
-			URPointI adjustedPosition = {_this.position.x + _this.center.x, _this.position.y + _this.center.y};
+	// 		for (int j = clippedY; j < clippedHeight; j++)
+	// 		{
+	// 			for (int i = clippedX; i < clippedWidth; i++)
+	// 			{
+	// 				Color color = _this.imageData[j * _this.size.x + i];
+	// 				if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
+	// 					UR_PUT_PIXEL(adjustedPosition.x - i, adjustedPosition.y + j, color.r, color.g, color.b);
+	// 			}
+	// 		}
+	// 	}
+	// 	else
+	// 	{
+	// 		PointI adjustedPosition = {_this.position.x + _this.center.x, _this.position.y + _this.center.y};
 
-			int clippedWidth = fmin(_this.size.x,
-									fmax(0, _this.size.x - (_this.size.x + adjustedPosition.x - UR_SCREEN_WIDTH)));
-			int clippedHeight = fmin(_this.size.y,
-									 fmax(0, _this.size.y - (_this.size.y + adjustedPosition.y - UR_SCREEN_HEIGHT)));
+	// 		int clippedWidth = fmin(_this.size.x,
+	// 								fmax(0, _this.size.x - (_this.size.x + adjustedPosition.x - UR_SCREEN_WIDTH)));
+	// 		int clippedHeight = fmin(_this.size.y,
+	// 								 fmax(0, _this.size.y - (_this.size.y + adjustedPosition.y - UR_SCREEN_HEIGHT)));
 
-			int clippedX = adjustedPosition.x < 0 ? -adjustedPosition.x : 0;
-			int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
+	// 		int clippedX = adjustedPosition.x < 0 ? -adjustedPosition.x : 0;
+	// 		int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
 
-			for (int j = clippedY; j < clippedHeight; j++)
-			{
-				for (int i = clippedX; i < clippedWidth; i++)
-				{
-					URColor color = _this.imageData[j * _this.size.x + i];
-					if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
-						UR_PUT_PIXEL(adjustedPosition.x + i, adjustedPosition.y + j, color.r, color.g, color.b);
-				}
-			}
-		}
-	}
+	// 		for (int j = clippedY; j < clippedHeight; j++)
+	// 		{
+	// 			for (int i = clippedX; i < clippedWidth; i++)
+	// 			{
+	// 				Color color = _this.imageData[j * _this.size.x + i];
+	// 				if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
+	// 					UR_PUT_PIXEL(adjustedPosition.x + i, adjustedPosition.y + j, color.r, color.g, color.b);
+	// 			}
+	// 		}
+	// 	}
+	// }
 
-	void urSpriteDrawTransparentClippedLowerLine(URSprite _this, int lowerLineHeight)
-	{
-		int clippedWidth = fmin(_this.size.x,
-								fmax(0, _this.size.x - (_this.size.x + _this.position.x - UR_SCREEN_WIDTH)));
-		int clippedHeight = fmin(_this.size.y,
-								 fmax(0, _this.size.y - (_this.size.y + _this.position.y - lowerLineHeight)));
-		int clippedX = _this.position.x < 0 ? -_this.position.x : 0;
-		int clippedY = _this.position.y < 0 ? -_this.position.y : 0;
+	// void urSpriteDrawTransparentClippedLowerLine(URSprite _this, int lowerLineHeight)
+	// {
+	// 	int clippedWidth = fmin(_this.size.x,
+	// 							fmax(0, _this.size.x - (_this.size.x + _this.position.x - UR_SCREEN_WIDTH)));
+	// 	int clippedHeight = fmin(_this.size.y,
+	// 							 fmax(0, _this.size.y - (_this.size.y + _this.position.y - lowerLineHeight)));
+	// 	int clippedX = _this.position.x < 0 ? -_this.position.x : 0;
+	// 	int clippedY = _this.position.y < 0 ? -_this.position.y : 0;
 
-		if (_this.isFlipped)
-			for (int j = clippedY; j < clippedHeight; j++)
-			{
-				for (int i = clippedX; i < clippedWidth; i++)
-				{
-					URColor color = _this.imageData[j * _this.size.x + i];
-					if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
-						UR_PUT_PIXEL(_this.position.x + _this.size.x - i, _this.position.y + j, color.r, color.g, color.b);
-				}
-			}
-		else
-			for (int j = clippedY; j < clippedHeight; j++)
-			{
-				for (int i = clippedX; i < clippedWidth; i++)
-				{
-					URColor color = _this.imageData[j * _this.size.x + i];
-					if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
-						UR_PUT_PIXEL(_this.position.x + i, _this.position.y + j, color.r, color.g, color.b);
-				}
-			}
-	}
+	// 	if (_this.isFlipped)
+	// 		for (int j = clippedY; j < clippedHeight; j++)
+	// 		{
+	// 			for (int i = clippedX; i < clippedWidth; i++)
+	// 			{
+	// 				Color color = _this.imageData[j * _this.size.x + i];
+	// 				if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
+	// 					UR_PUT_PIXEL(_this.position.x + _this.size.x - i, _this.position.y + j, color.r, color.g, color.b);
+	// 			}
+	// 		}
+	// 	else
+	// 		for (int j = clippedY; j < clippedHeight; j++)
+	// 		{
+	// 			for (int i = clippedX; i < clippedWidth; i++)
+	// 			{
+	// 				Color color = _this.imageData[j * _this.size.x + i];
+	// 				if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
+	// 					UR_PUT_PIXEL(_this.position.x + i, _this.position.y + j, color.r, color.g, color.b);
+	// 			}
+	// 		}
+	// }
 
-	void urSpriteDestroy(URSprite _this)
-	{
-		UR_FREE(_this.imageData);
-	}
+	// void urSpriteDestroy(URSprite _this)
+	// {
+	// 	UR_FREE(_this.imageData);
+	// }
 
-	URSprite urSpriteCreateCkeckerBoard(URPointI size, int checkerWidth, URColor color1, URColor color2)
-	{
-		URSprite _this = {0};
-		URColor currentColor = color1;
-		_this.imageData = (URColor *)UR_MALLOC(sizeof(URColor) * size.x * size.y);
-		_this.size = size;
-		for (int y = 0; y < _this.size.y; y++)
-		{
-			for (int x = 0; x < _this.size.x; x++)
-			{
-				if ((y / checkerWidth + x / checkerWidth) % 2)
-				{
-					currentColor = color1;
-				}
-				else
-				{
-					currentColor = color2;
-				}
-				_this.imageData[x + y * size.x] = currentColor;
-			}
-		}
-		return _this;
-	}
+	// URSprite urSpriteCreateCkeckerBoard(PointI size, int checkerWidth, Color color1, Color color2)
+	// {
+	// 	URSprite _this = {0};
+	// 	Color currentColor = color1;
+	// 	_this.imageData = (Color *)UR_MALLOC(sizeof(Color) * size.x * size.y);
+	// 	_this.size = size;
+	// 	for (int y = 0; y < _this.size.y; y++)
+	// 	{
+	// 		for (int x = 0; x < _this.size.x; x++)
+	// 		{
+	// 			if ((y / checkerWidth + x / checkerWidth) % 2)
+	// 			{
+	// 				currentColor = color1;
+	// 			}
+	// 			else
+	// 			{
+	// 				currentColor = color2;
+	// 			}
+	// 			_this.imageData[x + y * size.x] = currentColor;
+	// 		}
+	// 	}
+	// 	return _this;
+	// }
 
-	URSprite urSpriteDrawTransparentAnimatedClipped(URSprite _this, double deltaTime)
-	{
-		if (!_this.animation.isPlaying)
-		{
-			_this.animation.isPlaying = true;
-		}
+	// URSprite urSpriteDrawTransparentAnimatedClipped(URSprite _this, double deltaTime)
+	// {
+	// 	if (!_this.animation.isPlaying)
+	// 	{
+	// 		_this.animation.isPlaying = true;
+	// 	}
 
-		_this.animation.frameIncrement += deltaTime * _this.animation.frameRate;
-		int lastFrame = _this.animation.currentFrame;
-		_this.animation.currentFrame = _this.animation.frameIncrement;
-		_this.animation.currentFrame %= _this.animation.frameCount;
-		if (_this.animation.currentFrame < lastFrame)
-		{
-			_this.animation.isPlaying = false;
-		}
+	// 	_this.animation.frameIncrement += deltaTime * _this.animation.frameRate;
+	// 	int lastFrame = _this.animation.currentFrame;
+	// 	_this.animation.currentFrame = _this.animation.frameIncrement;
+	// 	_this.animation.currentFrame %= _this.animation.frameCount;
+	// 	if (_this.animation.currentFrame < lastFrame)
+	// 	{
+	// 		_this.animation.isPlaying = false;
+	// 	}
 
-		if (_this.isFlipped)
-		{
-			URPointI adjustedPosition = {_this.position.x - _this.center.x, _this.position.y + _this.center.y};
+	// 	if (_this.isFlipped)
+	// 	{
+	// 		PointI adjustedPosition = {_this.position.x - _this.center.x, _this.position.y + _this.center.y};
 
-			int clippedWidth = fmin(_this.position.x + _this.size.y, _this.animation.frameWidth);
+	// 		int clippedWidth = fmin(_this.position.x + _this.size.y, _this.animation.frameWidth);
 
-			int clippedHeight = fmin(_this.size.y,
-									 fmax(0, _this.size.y - (_this.size.y - UR_SCREEN_HEIGHT)));
+	// 		int clippedHeight = fmin(_this.size.y,
+	// 								 fmax(0, _this.size.y - (_this.size.y - UR_SCREEN_HEIGHT)));
 
-			int clippedX = 0;
-			int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
+	// 		int clippedX = 0;
+	// 		int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
 
-			for (int j = clippedY; j < clippedHeight; j++)
-			{
-				for (int i = clippedX; i < clippedWidth; i++)
-				{
-					URColor color = _this.imageData[j * _this.size.x + i +
-													_this.animation.currentFrame * _this.animation.frameWidth];
-					if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
-						UR_PUT_PIXEL(adjustedPosition.x - i, adjustedPosition.y + j, color.r, color.g, color.b);
-				}
-			}
-			return _this;
-		}
+	// 		for (int j = clippedY; j < clippedHeight; j++)
+	// 		{
+	// 			for (int i = clippedX; i < clippedWidth; i++)
+	// 			{
+	// 				Color color = _this.imageData[j * _this.size.x + i +
+	// 												_this.animation.currentFrame * _this.animation.frameWidth];
+	// 				if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
+	// 					UR_PUT_PIXEL(adjustedPosition.x - i, adjustedPosition.y + j, color.r, color.g, color.b);
+	// 			}
+	// 		}
+	// 		return _this;
+	// 	}
 
-		{
-			URPointI adjustedPosition = {_this.position.x + _this.center.x, _this.position.y + _this.center.y};
+	// 	{
+	// 		PointI adjustedPosition = {_this.position.x + _this.center.x, _this.position.y + _this.center.y};
 
-			int clippedWidth = fmin(_this.animation.frameWidth,
-									fmax(0, _this.animation.frameWidth - (_this.animation.frameWidth + adjustedPosition.x -
-																		  UR_SCREEN_WIDTH)));
+	// 		int clippedWidth = fmin(_this.animation.frameWidth,
+	// 								fmax(0, _this.animation.frameWidth - (_this.animation.frameWidth + adjustedPosition.x -
+	// 																	  UR_SCREEN_WIDTH)));
 
-			int clippedHeight = fmin(_this.size.y,
-									 fmax(0, _this.size.y - (_this.size.y + adjustedPosition.y - UR_SCREEN_HEIGHT)));
+	// 		int clippedHeight = fmin(_this.size.y,
+	// 								 fmax(0, _this.size.y - (_this.size.y + adjustedPosition.y - UR_SCREEN_HEIGHT)));
 
-			int clippedX = adjustedPosition.x < 0 ? -adjustedPosition.x : 0;
-			int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
+	// 		int clippedX = adjustedPosition.x < 0 ? -adjustedPosition.x : 0;
+	// 		int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
 
-			for (int j = clippedY; j < clippedHeight; j++)
-			{
-				for (int i = clippedX; i < clippedWidth; i++)
-				{
-					URColor color = _this.imageData[j * _this.size.x + i +
-													_this.animation.currentFrame * _this.animation.frameWidth];
-					if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
-						UR_PUT_PIXEL(adjustedPosition.x + i, adjustedPosition.y + j, color.r, color.g, color.b);
-				}
-			}
-			return _this;
-		}
-	}
+	// 		for (int j = clippedY; j < clippedHeight; j++)
+	// 		{
+	// 			for (int i = clippedX; i < clippedWidth; i++)
+	// 			{
+	// 				Color color = _this.imageData[j * _this.size.x + i +
+	// 												_this.animation.currentFrame * _this.animation.frameWidth];
+	// 				if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
+	// 					UR_PUT_PIXEL(adjustedPosition.x + i, adjustedPosition.y + j, color.r, color.g, color.b);
+	// 			}
+	// 		}
+	// 		return _this;
+	// 	}
+	// }
 
 	bool urHitTestRectRect(URRectI rectangleA, URRectI rectangleB)
 	{
@@ -972,7 +972,7 @@
 		return !(a[1] > b[3] || b[1] > a[3]) && !(a[0] > b[2] || b[0] > a[2]);
 	}
 
-	bool urHitTestPointRect(URPointI point, URRectI rectangle)
+	bool urHitTestPointRect(PointI point, URRectI rectangle)
 	{
 		if (point.x >= rectangle.position.x &&
 			point.x <= rectangle.position.x + rectangle.size.x &&
@@ -1005,12 +1005,12 @@
 		{
 			char text[1000] = {0};
 			snprintf(text, 1000, "fps: %d", (int)floor(avg));
-			urPrintString((URPointI){230, 220}, text, (URColor){0, 0xff, 0xff});
+			urPrintString((PointI){230, 220}, text, (Color){0, 0xff, 0xff});
 		}
 
 		{
 			char text[1000] = {0};
 			snprintf(text, 1000, "ftime:%.4f", deltaTime);
-			urPrintString((URPointI){230, 230}, text, (URColor){0, 0xff, 0xff});
+			urPrintString((PointI){230, 230}, text, (Color){0, 0xff, 0xff});
 		}
 	}
