@@ -31,6 +31,8 @@ ifeq ($(config),debug)
   define PRELINKCMDS
   endef
   define POSTBUILDCMDS
+	@echo Running postbuild commands
+	cp -rf assets bin/Debug
   endef
 all: prebuild prelink $(TARGET)
 	@:
@@ -58,6 +60,8 @@ ifeq ($(config),release)
   define PRELINKCMDS
   endef
   define POSTBUILDCMDS
+	@echo Running postbuild commands
+	cp -rf assets bin/Release
   endef
 all: prebuild prelink $(TARGET)
 	@:
