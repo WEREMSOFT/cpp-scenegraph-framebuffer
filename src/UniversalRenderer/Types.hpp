@@ -1,7 +1,9 @@
 #pragma once
+#include <SDL2/SDL.h>
 
 namespace UR
 {
+
 #ifndef UR_MALLOC
 #define UR_MALLOC malloc
 #endif
@@ -13,6 +15,12 @@ namespace UR
 #ifndef UR_FREE
 #define UR_FREE free
 #endif
+
+	namespace RendererCore
+	{
+		SDL_Renderer *renderer;
+		SDL_Window *window;
+	};
 
 	struct PointI
 	{

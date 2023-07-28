@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "./core/UniversalRenderer.hpp"
+#include "./UniversalRenderer/Renderer.hpp"
 #include "App.hpp"
 int main(void)
 {

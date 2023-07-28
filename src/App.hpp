@@ -1,14 +1,14 @@
-#include "core/UniversalRenderer.hpp"
+#include "UniversalRenderer/Renderer.hpp"
 #include <string>
 
-using namespace weremsoft;
+using namespace UR;
 class App
 {
 	Uint32 oldTime = SDL_GetTicks();
 	Uint32 newTime;
 	double delta;
 	bool isRunning = true;
-	UniversalRenderer ur;
+	Renderer ur;
 
 public:
 	App()
