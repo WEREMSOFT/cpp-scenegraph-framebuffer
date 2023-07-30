@@ -23,6 +23,12 @@ public:
 
 	void Run()
 	{
+		Sprite s = Sprite(std::string("assets/running-man2.bmp").c_str());
+		s.animated = true;
+		s.animation.frameCount = 8;
+		s.animation.frameRate = 12;
+		s.animation.frameWidth = 51;
+
 		while (isRunning)
 		{
 			newTime = SDL_GetTicks();
@@ -42,7 +48,9 @@ public:
 			else
 				ur.DrawCircleFill((PointI){150, 100}, 100, (Color){0, 255, 0});
 
-			// s = urSpriteDrawTransparentAnimatedClipped(s, delta);
+			// s.Draw();
+
+			s.DrawTransparentAnimatedClipped(delta);
 
 			ur.PrintString((PointI){100, 100}, std::string("hello world!!").c_str(), (Color){255, 255, 0});
 

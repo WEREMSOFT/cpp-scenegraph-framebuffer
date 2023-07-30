@@ -8,6 +8,7 @@
 
 namespace UR
 {
+#pragma pack(push, 1)
 	struct BITMAPFILEHEADER
 	{
 		uint16_t bfType;
@@ -31,11 +32,12 @@ namespace UR
 		uint32_t biClrUsed;
 		uint32_t biClrImporant;
 	};
+#pragma pack(pop)
 
 #define BITMAPINFOHEADER_SIZE 40
 #define BITMAPFILEHEADER_SIZE 14
 
-	unsigned char *BMPLoad(char *fileName, int *imageWidth, int *imageHeight)
+	unsigned char *BMPLoad(const char *fileName, int *imageWidth, int *imageHeight)
 	{
 		BITMAPFILEHEADER fileHeader;
 		BITMAPINFOHEADER infoHeader;

@@ -7,21 +7,32 @@
 
 namespace UR
 {
+	struct Animation
+	{
+		bool isPlaying;
+		int frameWidth;
+		int frameHeight;
+		int t;
+		int currentFrame;
+		int frameCount;
+		float frameIncrement;
+		float frameRate;
+	};
+
 	class Sprite
 	{
 	public:
-		bool animated;
-		bool isFlipped;
-		Animation animation;
-		PointI position;
-		PointI center;
-		PointI size;
+		bool animated = false;
+		bool isFlipped = false;
+		Animation animation = {0};
+		PointI position = {0};
+		PointI center = {0};
+		PointI size = {0};
 		Color *imageData;
 
-		Sprite(char *file)
+		Sprite(const char *file)
 		{
 			int nrChannels;
-
 			imageData = (Color *)BMPLoad(file, &size.x, &size.y);
 			if (imageData == NULL)
 			{

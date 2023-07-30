@@ -37,16 +37,4 @@ namespace UR
 	{
 		unsigned char r, g, b;
 	};
-
-	struct Animation
-	{
-		bool isPlaying;
-		int frameWidth;
-		int frameHeight;
-		int t;
-		int currentFrame;
-		int frameCount;
-		float frameIncrement;
-		float frameRate;
-	};
 }
