@@ -24,10 +24,12 @@ public:
 	void Run()
 	{
 		Sprite s = Sprite(std::string("assets/running-man2.bmp").c_str());
+
 		s.animated = true;
-		s.animation.frameCount = 8;
-		s.animation.frameRate = 12;
-		s.animation.frameWidth = 51;
+		s.animations.reserve(3);
+		s.animations.emplace_back(Animation{.frameWidth = 51, .frameHeight = 66, .frameCount = 6, .frameRate = 12});
+		s.animations.emplace_back(Animation{.frameWidth = 51, .frameHeight = 66, .frameCount = 8, .frameRate = 12});
+		s.animations.emplace_back(Animation{.frameWidth = 51, .frameHeight = 66, .frameCount = 8, .frameRate = 3});
 
 		while (isRunning)
 		{
@@ -48,9 +50,7 @@ public:
 			else
 				ur.DrawCircleFill((PointI){150, 100}, 100, (Color){0, 255, 0});
 
-			// s.Draw();
-
-			s.DrawTransparentAnimatedClipped(delta);
+			s.DrawTransparentAnimatedClipped2(delta, 0);
 
 			ur.PrintString((PointI){100, 100}, std::string("hello world!!").c_str(), (Color){255, 255, 0});
 

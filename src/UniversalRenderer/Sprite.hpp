@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include "Types.hpp"
 #include "Utils.hpp"
 #include "ImplementationSDL2.hpp"
@@ -9,14 +10,16 @@ namespace UR
 {
 	struct Animation
 	{
-		bool isPlaying;
+		// configuration
 		int frameWidth;
 		int frameHeight;
+		int frameCount;
+		float frameRate;
+		// state
+		bool isPlaying;
 		int t;
 		int currentFrame;
-		int frameCount;
 		float frameIncrement;
-		float frameRate;
 	};
 
 	class Sprite
@@ -24,7 +27,7 @@ namespace UR
 	public:
 		bool animated = false;
 		bool isFlipped = false;
-		Animation animation = {0};
+		std::vector<Animation> animations;
 		PointI position = {0};
 		PointI center = {0};
 		PointI size = {0};
@@ -103,7 +106,7 @@ namespace UR
 			}
 		}
 
-		void urSpriteDrawTransparent()
+		void DrawTransparent()
 		{
 			if (isFlipped)
 				for (int j = 0; j < size.y; j++)
@@ -227,30 +230,32 @@ namespace UR
 			}
 		}
 
-		void DrawTransparentAnimatedClipped(double deltaTime)
+		void DrawTransparentAnimatedClipped2(double deltaTime, int animationId = 0)
 		{
-			if (!animation.isPlaying)
+			if (!animations[animationId].isPlaying)
 			{
-				animation.isPlaying = true;
+				animations[animationId].isPlaying = true;
 			}
 
-			animation.frameIncrement += deltaTime * animation.frameRate;
-			int lastFrame = animation.currentFrame;
-			animation.currentFrame = animation.frameIncrement;
-			animation.currentFrame %= animation.frameCount;
-			if (animation.currentFrame < lastFrame)
+			int animationStartingY = animationId * animations[animationId].frameHeight;
+
+			animations[animationId].frameIncrement += deltaTime * animations[animationId].frameRate;
+			int lastFrame = animations[animationId].currentFrame;
+			animations[animationId].currentFrame = animations[animationId].frameIncrement;
+			animations[animationId].currentFrame %= animations[animationId].frameCount;
+			if (animations[animationId].currentFrame < lastFrame)
 			{
-				animation.isPlaying = false;
+				animations[animationId].isPlaying = false;
 			}
 
 			if (isFlipped)
 			{
 				PointI adjustedPosition = {position.x - center.x, position.y + center.y};
 
-				int clippedWidth = fmin(position.x + size.y, animation.frameWidth);
+				int clippedWidth = fmin(position.x + size.y, animations[animationId].frameWidth);
 
-				int clippedHeight = fmin(size.y,
-										 fmax(0, size.y - (size.y - UR_SCREEN_HEIGHT)));
+				int clippedHeight = fmin(animations[animationId].frameHeight,
+										 fmax(0, animations[animationId].frameHeight - (animations[animationId].frameHeight - UR_SCREEN_HEIGHT)));
 
 				int clippedX = 0;
 				int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
@@ -260,7 +265,7 @@ namespace UR
 					for (int i = clippedX; i < clippedWidth; i++)
 					{
 						Color color = imageData[j * size.x + i +
-												animation.currentFrame * animation.frameWidth];
+												animations[animationId].currentFrame * animations[animationId].frameWidth];
 						if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
 							UR_PUT_PIXEL(adjustedPosition.x - i, adjustedPosition.y + j, color.r, color.g, color.b);
 					}
@@ -270,12 +275,12 @@ namespace UR
 
 			PointI adjustedPosition = {position.x + center.x, position.y + center.y};
 
-			int clippedWidth = fmin(animation.frameWidth,
-									fmax(0, animation.frameWidth - (animation.frameWidth + adjustedPosition.x -
+			int clippedWidth = fmin(animations[animationId].frameWidth,
+									fmax(0, animations[animationId].frameWidth - (animations[animationId].frameWidth + adjustedPosition.x -
 																	UR_SCREEN_WIDTH)));
 
-			int clippedHeight = fmin(size.y,
-									 fmax(0, size.y - (size.y + adjustedPosition.y - UR_SCREEN_HEIGHT)));
+			int clippedHeight = fmin(animations[animationId].frameHeight,
+									 fmax(0, animations[animationId].frameHeight - (animations[animationId].frameHeight + adjustedPosition.y - UR_SCREEN_HEIGHT)));
 
 			int clippedX = adjustedPosition.x < 0 ? -adjustedPosition.x : 0;
 			int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
@@ -284,13 +289,78 @@ namespace UR
 			{
 				for (int i = clippedX; i < clippedWidth; i++)
 				{
-					Color color = imageData[j * size.x + i +
-											animation.currentFrame * animation.frameWidth];
+					Color color = imageData[(animationStartingY + j) * size.x + i +
+											animations[animationId].currentFrame * animations[animationId].frameWidth];
 					if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
 						UR_PUT_PIXEL(adjustedPosition.x + i, adjustedPosition.y + j, color.r, color.g, color.b);
 				}
 			}
 		}
+
+		// void DrawTransparentAnimatedClipped(double deltaTime)
+		// {
+		// 	if (!animations[animationId].isPlaying)
+		// 	{
+		// 		animations[animationId].isPlaying = true;
+		// 	}
+
+		// 	animations[animationId].frameIncrement += deltaTime * animations[animationId].frameRate;
+		// 	int lastFrame = animations[animationId].currentFrame;
+		// 	animations[animationId].currentFrame = animations[animationId].frameIncrement;
+		// 	animations[animationId].currentFrame %= animations[animationId].frameCount;
+		// 	if (animations[animationId].currentFrame < lastFrame)
+		// 	{
+		// 		animations[animationId].isPlaying = false;
+		// 	}
+
+		// 	if (isFlipped)
+		// 	{
+		// 		PointI adjustedPosition = {position.x - center.x, position.y + center.y};
+
+		// 		int clippedWidth = fmin(position.x + size.y, animations[animationId].frameWidth);
+
+		// 		int clippedHeight = fmin(size.y,
+		// 								 fmax(0, size.y - (size.y - UR_SCREEN_HEIGHT)));
+
+		// 		int clippedX = 0;
+		// 		int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
+
+		// 		for (int j = clippedY; j < clippedHeight; j++)
+		// 		{
+		// 			for (int i = clippedX; i < clippedWidth; i++)
+		// 			{
+		// 				Color color = imageData[j * size.x + i +
+		// 										animations[animationId].currentFrame * animations[animationId].frameWidth];
+		// 				if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
+		// 					UR_PUT_PIXEL(adjustedPosition.x - i, adjustedPosition.y + j, color.r, color.g, color.b);
+		// 			}
+		// 		}
+		// 		return;
+		// 	}
+
+		// 	PointI adjustedPosition = {position.x + center.x, position.y + center.y};
+
+		// 	int clippedWidth = fmin(animations[animationId].frameWidth,
+		// 							fmax(0, animations[animationId].frameWidth - (animations[animationId].frameWidth + adjustedPosition.x -
+		// 															UR_SCREEN_WIDTH)));
+
+		// 	int clippedHeight = fmin(size.y,
+		// 							 fmax(0, size.y - (size.y + adjustedPosition.y - UR_SCREEN_HEIGHT)));
+
+		// 	int clippedX = adjustedPosition.x < 0 ? -adjustedPosition.x : 0;
+		// 	int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
+
+		// 	for (int j = clippedY; j < clippedHeight; j++)
+		// 	{
+		// 		for (int i = clippedX; i < clippedWidth; i++)
+		// 		{
+		// 			Color color = imageData[j * size.x + i +
+		// 									animation[animationId].currentFrame * animations[animationId].frameWidth];
+		// 			if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
+		// 				UR_PUT_PIXEL(adjustedPosition.x + i, adjustedPosition.y + j, color.r, color.g, color.b);
+		// 		}
+		// 	}
+		// }
 
 	}; // END Sprite class
 }
