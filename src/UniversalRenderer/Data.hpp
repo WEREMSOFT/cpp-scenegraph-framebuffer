@@ -271,4 +271,4 @@ namespace UR
 		0, 0, 0  \
 	}
 
-}
+} // END UR NAMESPACE

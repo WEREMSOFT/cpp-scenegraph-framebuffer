@@ -1,4 +1,5 @@
 #include "UniversalRenderer/Renderer.hpp"
+#include "Game/GameObject.hpp"
 #include <string>
 
 using namespace UR;
@@ -9,11 +10,19 @@ class App
 	double delta;
 	bool isRunning = true;
 	Renderer ur;
-
+	game::GameObject go; 
 public:
 	App()
 	{
 		printf("creating app\n");
+		game::GameObject child;
+		go.AddChild(&child);
+
+		printf("Vector Size %d\n", go.children.size());
+		printf("Child name %s\n", go.children[0]->name.c_str());
+		printf("Child id %d\n", go.children[0]->id);
+
+		go.Update(0);
 	}
 
 	~App()
@@ -23,9 +32,9 @@ public:
 
 	void Run()
 	{
-		Sprite s = Sprite(std::string("assets/running-man2.bmp").c_str());
 
-		s.animated = true;
+		SpriteAnimated s = SpriteAnimated(std::string("assets/running-man2.bmp").c_str());
+
 		s.animations.reserve(3);
 		s.animations.emplace_back(Animation{.frameWidth = 51, .frameHeight = 66, .frameCount = 6, .frameRate = 12});
 		s.animations.emplace_back(Animation{.frameWidth = 51, .frameHeight = 66, .frameCount = 8, .frameRate = 12});
@@ -37,24 +46,9 @@ public:
 			delta = (double)(newTime - oldTime) / 1000.;
 			ur.StartFrame();
 
-			for (int i = 0; i < 800; ++i)
-				putPixel(i, i, 0, 255, 0);
+			ur.DrawDemo(delta);
 
-			if (ur.keysJustPressed[SDL_SCANCODE_SPACE])
-				ur.DrawCircleFill((PointI){100, 100}, 100, (Color){255, 0, 0});
-			else
-				ur.DrawCircleFill((PointI){100, 100}, 100, (Color){0, 255, 0});
-
-			if (ur.IsMouseButtonJustPressed(SDL_BUTTON_LEFT))
-				ur.DrawCircleFill((PointI){150, 100}, 100, (Color){255, 0, 0});
-			else
-				ur.DrawCircleFill((PointI){150, 100}, 100, (Color){0, 255, 0});
-
-			s.DrawTransparentAnimatedClipped2(delta, 0);
-
-			ur.PrintString((PointI){100, 100}, std::string("hello world!!").c_str(), (Color){255, 255, 0});
-
-			ur.PrintFPS(delta);
+			s.DrawTransparentAnimatedClipped(delta, 0);
 
 			ur.EndFrame();
 

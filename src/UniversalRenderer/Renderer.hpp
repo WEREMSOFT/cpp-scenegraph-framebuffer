@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <assert.h>
+#include <string>
 #include <stdbool.h>
 #include <stdint.h>
 #include <arpa/inet.h>
@@ -8,7 +9,7 @@
 #include "Types.hpp"
 #include "Data.hpp"
 #include "Sprite.hpp"
-
+#include "SpriteAnimated.hpp"
 #include "ImplementationSDL2.hpp"
 #include "Config.hpp"
 
@@ -248,5 +249,28 @@ namespace UR
 			}
 		}
 
-	};
+		void DrawDemo(double deltaTime)
+		{
+			for (int i = 0; i < 800; ++i)
+				putPixel(i, i, 0, 255, 0);
+
+			if (keysJustPressed[SDL_SCANCODE_SPACE])
+				DrawCircleFill((PointI){100, 100}, 100, (Color){255, 0, 0});
+			else
+				DrawCircleFill((PointI){100, 100}, 100, (Color){0, 255, 0});
+
+			if (IsMouseButtonJustPressed(SDL_BUTTON_LEFT))
+				DrawCircle((PointI){150, 100}, 50, UR_RED);
+			else
+				DrawCircleFill((PointI){150, 100}, 50, UR_PURPLE);
+
+			DrawSquare({100, 100}, {30, 30}, UR_RED);
+			DrawSquareFill({130, 130}, {30, 30}, UR_RED);
+
+			DrawLine({320, 0}, {0, 240}, UR_BLUE);
+			PrintString((PointI){100, 100}, std::string("hello world!!").c_str(), (Color){255, 255, 0});
+
+			PrintFPS(deltaTime);
+		}
+	}; // END RENDERER CLASS
 }
