@@ -4,6 +4,12 @@
 
 namespace UR
 {
+	// --- KEYBOARD
+	bool keys[256];
+	bool keysJustPressed[256];
+	// --- MOUSE
+	int mouseButtons[5] = {0};
+	
 	unsigned char Fonts[][5] =
 		{
 			// 0

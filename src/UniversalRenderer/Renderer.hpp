@@ -18,12 +18,6 @@ namespace UR
 	class Renderer
 	{
 	public:
-		// --- KEYBOARD
-		bool keys[256];
-		bool keysJustPressed[256];
-		// --- MOUSE
-		int mouseButtons[5] = {0};
-
 		Renderer()
 		{
 			printf("creating renderer\n");
