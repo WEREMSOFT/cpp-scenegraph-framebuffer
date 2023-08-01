@@ -59,4 +59,21 @@ namespace UR
 	}
 
 	#define UR_PROCESS_INPUT processInput
+
+	#define UR_GET_ELAPSED_MILLISENCONDS SDL_GetTicks
+
+	void clearFrame()
+	{
+		SDL_SetRenderDrawColor(RendererCore::renderer, 0, 0, 0, 0);
+		SDL_RenderClear(RendererCore::renderer);
+	}
+
+	#define UR_CLEAR_FRAME clearFrame
+
+	void drawFrame()
+	{
+		SDL_RenderPresent(RendererCore::renderer);
+	}
+
+	#define UR_DRAW_FRAME drawFrame
 }

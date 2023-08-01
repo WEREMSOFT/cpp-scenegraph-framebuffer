@@ -18,7 +18,7 @@ namespace UR
 		float frameIncrement;
 	};
 
-	class SpriteAnimated: Sprite
+	class SpriteAnimated: public Sprite
 	{
 	public:
 		bool isFlipped = false;
@@ -53,7 +53,7 @@ namespace UR
 				int clippedWidth = fmin(position.x + size.y, animations[animationId].frameWidth);
 
 				int clippedHeight = fmin(animations[animationId].frameHeight,
-										 fmax(0, animations[animationId].frameHeight - (animations[animationId].frameHeight - UR_SCREEN_HEIGHT)));
+										 fmax(0, animations[animationId].frameHeight - (animations[animationId].frameHeight - RendererCore::screenSize.y)));
 
 				int clippedX = 0;
 				int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
@@ -75,10 +75,10 @@ namespace UR
 
 			int clippedWidth = fmin(animations[animationId].frameWidth,
 									fmax(0, animations[animationId].frameWidth - (animations[animationId].frameWidth + adjustedPosition.x -
-																	UR_SCREEN_WIDTH)));
+																	RendererCore::screenSize.y)));
 
 			int clippedHeight = fmin(animations[animationId].frameHeight,
-									 fmax(0, animations[animationId].frameHeight - (animations[animationId].frameHeight + adjustedPosition.y - UR_SCREEN_HEIGHT)));
+									 fmax(0, animations[animationId].frameHeight - (animations[animationId].frameHeight + adjustedPosition.y - RendererCore::screenSize.y)));
 
 			int clippedX = adjustedPosition.x < 0 ? -adjustedPosition.x : 0;
 			int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;

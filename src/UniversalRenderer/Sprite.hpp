@@ -4,7 +4,6 @@
 #include "Types.hpp"
 #include "Utils.hpp"
 #include "ImplementationSDL2.hpp"
-#include "Config.hpp"
 
 namespace UR
 {
@@ -16,6 +15,8 @@ namespace UR
 		PointI center = {0};
 		PointI size = {0};
 		Color *imageData;
+
+		Sprite() = default;
 
 		Sprite(const char *file)
 		{
@@ -54,7 +55,7 @@ namespace UR
 
 				int clippedWidth = fmin(adjustedPosition.x, size.x);
 				int clippedHeight = fmin(size.y,
-										 fmax(0, size.y - (size.y - UR_SCREEN_HEIGHT)));
+										 fmax(0, size.y - (size.y - RendererCore::screenSize.y)));
 
 				int clippedX = 0;
 				int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
@@ -73,9 +74,9 @@ namespace UR
 				PointI adjustedPosition = {position.x + center.x, position.y + center.y};
 
 				int clippedWidth = fmin(size.x,
-										fmax(0, size.x - (size.x + adjustedPosition.x - UR_SCREEN_WIDTH)));
+										fmax(0, size.x - (size.x + adjustedPosition.x - RendererCore::screenSize.x)));
 				int clippedHeight = fmin(size.y,
-										 fmax(0, size.y - (size.y + adjustedPosition.y - UR_SCREEN_HEIGHT)));
+										 fmax(0, size.y - (size.y + adjustedPosition.y - RendererCore::screenSize.y)));
 
 				int clippedX = adjustedPosition.x < 0 ? -adjustedPosition.x : 0;
 				int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
@@ -123,7 +124,7 @@ namespace UR
 
 				int clippedWidth = fmin(adjustedPosition.x, size.x);
 				int clippedHeight = fmin(size.y,
-										 fmax(0, size.y - (size.y - UR_SCREEN_HEIGHT)));
+										 fmax(0, size.y - (size.y - RendererCore::screenSize.y)));
 
 				int clippedX = 0;
 				int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
@@ -143,9 +144,9 @@ namespace UR
 				PointI adjustedPosition = {position.x + center.x, position.y + center.y};
 
 				int clippedWidth = fmin(size.x,
-										fmax(0, size.x - (size.x + adjustedPosition.x - UR_SCREEN_WIDTH)));
+										fmax(0, size.x - (size.x + adjustedPosition.x - RendererCore::screenSize.x)));
 				int clippedHeight = fmin(size.y,
-										 fmax(0, size.y - (size.y + adjustedPosition.y - UR_SCREEN_HEIGHT)));
+										 fmax(0, size.y - (size.y + adjustedPosition.y - RendererCore::screenSize.y)));
 
 				int clippedX = adjustedPosition.x < 0 ? -adjustedPosition.x : 0;
 				int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
@@ -165,7 +166,7 @@ namespace UR
 		void DrawTransparentClippedLowerLine(int lowerLineHeight)
 		{
 			int clippedWidth = fmin(size.x,
-									fmax(0, size.x - (size.x + position.x - UR_SCREEN_WIDTH)));
+									fmax(0, size.x - (size.x + position.x - RendererCore::screenSize.x)));
 			int clippedHeight = fmin(size.y,
 									 fmax(0, size.y - (size.y + position.y - lowerLineHeight)));
 			int clippedX = position.x < 0 ? -position.x : 0;

@@ -1,5 +1,4 @@
 #pragma once
-#include <SDL2/SDL.h>
 #include <assert.h>
 #include <string>
 #include <stdbool.h>
@@ -11,16 +10,19 @@
 #include "Sprite.hpp"
 #include "SpriteAnimated.hpp"
 #include "ImplementationSDL2.hpp"
-#include "Config.hpp"
 
 namespace UR
 {
 	class Renderer
 	{
 	public:
-		Renderer()
+		Uint32 oldTime = UR_GET_ELAPSED_MILLISENCONDS();
+		Uint32 newTime;
+		double delta;
+
+		Renderer(int screenWidth = 800, int screenHeight = 600)
 		{
-			printf("creating renderer\n");
+			RendererCore::screenSize = {.x = screenWidth, .y = screenHeight};
 			assert(SDL_Init(SDL_INIT_EVERYTHING) == 0 && "Error initializing SDL\n");
 
 			SDL_DisplayMode displayMode;
@@ -30,8 +32,8 @@ namespace UR
 				NULL,
 				SDL_WINDOWPOS_CENTERED,
 				SDL_WINDOWPOS_CENTERED,
-				800,
-				600,
+				RendererCore::screenSize.x,
+				RendererCore::screenSize.y,
 				0);
 
 			assert(RendererCore::window != NULL && "Error creating SDL window");
@@ -45,13 +47,15 @@ namespace UR
 
 		void StartFrame(void)
 		{
-			SDL_SetRenderDrawColor(RendererCore::renderer, 0, 0, 0, 0);
-			SDL_RenderClear(RendererCore::renderer);
+			newTime = UR_GET_ELAPSED_MILLISENCONDS();
+			delta = (double)(newTime - oldTime) / 1000.;
+			UR_CLEAR_FRAME();
 		}
 
 		void EndFrame(void)
 		{
-			SDL_RenderPresent(RendererCore::renderer);
+			UR_DRAW_FRAME();
+			oldTime = newTime;
 		}
 
 		~Renderer()
@@ -64,8 +68,8 @@ namespace UR
 
 		void ClearScreen(Color clearColor)
 		{
-			for (int x = 0; x < UR_SCREEN_WIDTH; x++)
-				for (int y = 0; y < UR_SCREEN_HEIGHT; y++)
+			for (int x = 0; x < RendererCore::screenSize.x; x++)
+				for (int y = 0; y < RendererCore::screenSize.y; y++)
 				{
 					PointI p = (PointI){x, y};
 					UR_PUT_PIXEL(p.x, p.y, clearColor.r, clearColor.g, clearColor.b);

@@ -3,12 +3,43 @@
 #include <string>
 
 using namespace UR;
+
+
+class RunningMan: public game::GameObjectAnimated
+{
+	public:
+		RunningMan(std::string fileName): GameObjectAnimated(fileName)
+		{
+			velocity.x = 100.;
+			velocity.y = 100.;
+		}
+
+		void Update(double deltaTime)
+		{
+			GameObjectAnimated::Update(deltaTime);
+			if(UR::keys[SDL_SCANCODE_LEFT])
+			{
+				position.x -= velocity.x * deltaTime;
+			}
+
+			if(UR::keys[SDL_SCANCODE_RIGHT])
+			{
+				position.x += velocity.x * deltaTime;
+			}
+			if(UR::keys[SDL_SCANCODE_UP])
+			{
+				position.y -= velocity.y * deltaTime;
+			}
+
+			if(UR::keys[SDL_SCANCODE_DOWN])
+			{
+				position.y += velocity.y * deltaTime;
+			}
+		}
+};
+
 class App
 {
-	Uint32 oldTime = SDL_GetTicks();
-	Uint32 newTime;
-	double delta;
-	bool isRunning = true;
 	Renderer ur;
 	game::GameObject go; 
 public:
@@ -33,7 +64,7 @@ public:
 	void Run()
 	{
 
-		game::GameObjectAnimated goa(std::string("assets/running-man2.bmp").c_str());
+		RunningMan goa(std::string("assets/running-man2.bmp").c_str());
 
 		goa.sprite.animations.reserve(3);
 		goa.sprite.animations.emplace_back(Animation{.frameWidth = 51, .frameHeight = 66, .frameCount = 6, .frameRate = 12});
@@ -42,11 +73,9 @@ public:
 
 		while (UR_PROCESS_INPUT())
 		{
-			newTime = SDL_GetTicks();
-			delta = (double)(newTime - oldTime) / 1000.;
 			ur.StartFrame();
 
-			ur.DrawDemo(delta);
+			ur.DrawDemo(ur.delta);
 
 			if(UR::keysJustPressed[SDL_SCANCODE_SPACE])
 			{
@@ -54,10 +83,10 @@ public:
 				goa.currentAnimation %= 3;
 			}
 
-			goa.Update(delta);
+			goa.Update(ur.delta);
+			goa.Draw(ur.delta);
 
 			ur.EndFrame();
-			oldTime = newTime;
 		}
 	}
 };

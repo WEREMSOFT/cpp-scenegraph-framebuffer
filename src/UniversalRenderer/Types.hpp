@@ -16,20 +16,37 @@ namespace UR
 #define UR_FREE free
 #endif
 
-	namespace RendererCore
-	{
-		SDL_Renderer *renderer;
-		SDL_Window *window;
-	};
 
 	struct PointI
 	{
 		int x, y;
 	};
+	
+	namespace RendererCore
+	{
+		SDL_Renderer *renderer;
+		SDL_Window *window;
+		PointI screenSize;
+	};
+
+	struct PointF
+	{
+		float x, y;
+	};
+
+	struct PointD
+	{
+		double x, y;
+	};
 
 	struct RectI
 	{
 		PointI position;
+		PointI size;
+	};
+
+	struct ScreenInfo
+	{
 		PointI size;
 	};
 
