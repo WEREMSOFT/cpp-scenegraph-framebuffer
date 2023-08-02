@@ -46,6 +46,13 @@ public:
 	App()
 	{
 		printf("creating app\n");
+
+		uint32_t flags = 0;
+		setFlag(flags, 2);
+
+		flags = 1;
+		cleanFlag(flags, 2);
+
 		game::GameObject child;
 		go.AddChild(&child);
 

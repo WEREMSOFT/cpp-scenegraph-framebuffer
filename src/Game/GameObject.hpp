@@ -13,9 +13,9 @@ namespace game
 	public:
 		std::string name;
 		std::vector<GameObject *> children;
-		static int lastId;
-		int id;
-
+		uint32_t tags;
+		static int32_t lastId;
+		int32_t id;
 		GameObject()
 		{
 			id = ++lastId;
@@ -27,7 +27,7 @@ namespace game
 			printf("Destroying GameObject\n");
 		}
 
-		void Update(double deltaTime)
+		virtual void Update(double deltaTime)
 		{
 			printf("Updating %d\n", id);
 			for (auto child : children)

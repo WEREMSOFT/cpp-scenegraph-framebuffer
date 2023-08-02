@@ -180,4 +180,18 @@ namespace UR
 		*imageHeight = height;
 		return Data;
 	}
+
+	void setFlag(uint32_t& flags, uint32_t bitPosition)
+	{
+		uint32_t flagToSet = 1;
+		flagToSet <<= bitPosition;
+		flags |= flagToSet;
+	}
+
+	void cleanFlag(uint32_t& flags, uint32_t bitPosition)
+	{
+		uint32_t flagToClean = 1;
+		flagToClean <<= bitPosition;
+		flags &= ~flagToClean;
+	}
 }
