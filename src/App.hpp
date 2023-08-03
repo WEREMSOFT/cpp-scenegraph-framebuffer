@@ -47,12 +47,6 @@ public:
 	{
 		printf("creating app\n");
 
-		uint32_t flags = 0;
-		setFlag(flags, 2);
-
-		flags = 1;
-		cleanFlag(flags, 2);
-
 		game::GameObject child;
 		go.AddChild(&child);
 
@@ -74,9 +68,9 @@ public:
 		RunningMan goa(std::string("assets/running-man2.bmp").c_str());
 
 		goa.sprite.animations.reserve(3);
-		goa.sprite.animations.emplace_back(Animation{.frameWidth = 51, .frameHeight = 66, .frameCount = 6, .frameRate = 12});
-		goa.sprite.animations.emplace_back(Animation{.frameWidth = 51, .frameHeight = 66, .frameCount = 8, .frameRate = 12});
-		goa.sprite.animations.emplace_back(Animation{.frameWidth = 51, .frameHeight = 66, .frameCount = 8, .frameRate = 3});
+		goa.sprite.animations.emplace_back(Animation{.frameSize = {51, 66}, .frameCount = 6, .frameRate = 12});
+		goa.sprite.animations.emplace_back(Animation{.frameSize = {51, 66}, .frameCount = 8, .frameRate = 12});
+		goa.sprite.animations.emplace_back(Animation{.frameSize = {51, 66}, .frameCount = 8, .frameRate = 3});
 
 		while (UR_PROCESS_INPUT())
 		{

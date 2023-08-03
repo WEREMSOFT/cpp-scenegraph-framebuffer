@@ -7,6 +7,13 @@
 
 namespace game
 {
+	enum GameObjectType
+	{
+		NORMAL,
+		DRAWABLE,
+		ANIMATED,
+		COUNT
+	};
 
 	class GameObject
 	{
@@ -20,6 +27,7 @@ namespace game
 		{
 			id = ++lastId;
 			printf("creating gameobject\n");
+			UR::setBit(tags, GameObjectType::NORMAL);
 		}
 
 		~GameObject()
@@ -55,6 +63,7 @@ namespace game
 
 		GameObjectDrawable(std::string bmpFile) : sprite(bmpFile.c_str())
 		{
+			UR::setBit(tags, GameObjectType::DRAWABLE);
 		}
 
 		virtual void Update(double deltaTime)
@@ -77,6 +86,7 @@ namespace game
 
 		GameObjectAnimated(std::string bmpFile) : sprite(bmpFile.c_str())
 		{
+			UR::setBit(tags, GameObjectType::ANIMATED);
 		}
 
 		void Update(double deltaTime)
@@ -87,7 +97,7 @@ namespace game
 
 		void Draw(double deltaTime)
 		{
-			sprite.DrawTransparentAnimatedClipped(deltaTime);
+			sprite.DrawTransparentAnimatedClipped(deltaTime, currentAnimation);
 		}
 	};
 } // END Game namespace

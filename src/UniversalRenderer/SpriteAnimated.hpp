@@ -7,8 +7,7 @@ namespace UR
 	struct Animation
 	{
 		// configuration
-		int frameWidth;
-		int frameHeight;
+		PointI frameSize;
 		int frameCount;
 		float frameRate;
 		// state
@@ -35,7 +34,7 @@ namespace UR
 				animations[animationId].isPlaying = true;
 			}
 
-			int animationStartingY = animationId * animations[animationId].frameHeight;
+			int animationStartingY = animationId * animations[animationId].frameSize.y;
 
 			animations[animationId].frameIncrement += deltaTime * animations[animationId].frameRate;
 			int lastFrame = animations[animationId].currentFrame;
@@ -50,10 +49,10 @@ namespace UR
 			{
 				PointI adjustedPosition = {position.x - center.x, position.y + center.y};
 
-				int clippedWidth = fmin(position.x + size.y, animations[animationId].frameWidth);
+				int clippedWidth = fmin(position.x + size.y, animations[animationId].frameSize.x);
 
-				int clippedHeight = fmin(animations[animationId].frameHeight,
-										 fmax(0, animations[animationId].frameHeight - (animations[animationId].frameHeight - RendererCore::screenSize.y)));
+				int clippedHeight = fmin(animations[animationId].frameSize.y,
+										 fmax(0, animations[animationId].frameSize.y - (animations[animationId].frameSize.y - RendererCore::screenSize.y)));
 
 				int clippedX = 0;
 				int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
@@ -63,7 +62,7 @@ namespace UR
 					for (int i = clippedX; i < clippedWidth; i++)
 					{
 						Color color = imageData[j * size.x + i +
-												animations[animationId].currentFrame * animations[animationId].frameWidth];
+												animations[animationId].currentFrame * animations[animationId].frameSize.x];
 						if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
 							UR_PUT_PIXEL(adjustedPosition.x - i, adjustedPosition.y + j, color.r, color.g, color.b);
 					}
@@ -73,12 +72,12 @@ namespace UR
 
 			PointI adjustedPosition = {position.x + center.x, position.y + center.y};
 
-			int clippedWidth = fmin(animations[animationId].frameWidth,
-									fmax(0, animations[animationId].frameWidth - (animations[animationId].frameWidth + adjustedPosition.x -
+			int clippedWidth = fmin(animations[animationId].frameSize.x,
+									fmax(0, animations[animationId].frameSize.x - (animations[animationId].frameSize.x + adjustedPosition.x -
 																	RendererCore::screenSize.y)));
 
-			int clippedHeight = fmin(animations[animationId].frameHeight,
-									 fmax(0, animations[animationId].frameHeight - (animations[animationId].frameHeight + adjustedPosition.y - RendererCore::screenSize.y)));
+			int clippedHeight = fmin(animations[animationId].frameSize.y,
+									 fmax(0, animations[animationId].frameSize.y - (animations[animationId].frameSize.y + adjustedPosition.y - RendererCore::screenSize.y)));
 
 			int clippedX = adjustedPosition.x < 0 ? -adjustedPosition.x : 0;
 			int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
@@ -88,7 +87,7 @@ namespace UR
 				for (int i = clippedX; i < clippedWidth; i++)
 				{
 					Color color = imageData[(animationStartingY + j) * size.x + i +
-											animations[animationId].currentFrame * animations[animationId].frameWidth];
+											animations[animationId].currentFrame * animations[animationId].frameSize.x];
 					if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
 						UR_PUT_PIXEL(adjustedPosition.x + i, adjustedPosition.y + j, color.r, color.g, color.b);
 				}

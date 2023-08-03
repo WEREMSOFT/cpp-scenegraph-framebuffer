@@ -181,17 +181,24 @@ namespace UR
 		return Data;
 	}
 
-	void setFlag(uint32_t& flags, uint32_t bitPosition)
+	void setBit(uint32_t& bits, uint32_t bitPosition)
 	{
-		uint32_t flagToSet = 1;
-		flagToSet <<= bitPosition;
-		flags |= flagToSet;
+		uint32_t bitToSet = 1;
+		bitToSet <<= bitPosition;
+		bits |= bitToSet;
 	}
 
-	void cleanFlag(uint32_t& flags, uint32_t bitPosition)
+	void clearBit(uint32_t& bits, uint32_t bitPosition)
 	{
-		uint32_t flagToClean = 1;
-		flagToClean <<= bitPosition;
-		flags &= ~flagToClean;
+		uint32_t bitToClean = 1;
+		bitToClean <<= bitPosition;
+		bits &= ~bitToClean;
+	}
+
+	bool isBitSet(uint32_t& bits, uint32_t bitPosition)
+	{
+		uint32_t bitToTest = 1;
+		bitToTest <<= bitPosition;
+		return (bits & bitToTest) == bitToTest;
 	}
 }
