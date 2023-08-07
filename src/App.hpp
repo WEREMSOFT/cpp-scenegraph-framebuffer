@@ -1,5 +1,6 @@
 #include "UniversalRenderer/Renderer.hpp"
 #include "Game/GameObject.hpp"
+#include "Game/GameObjectAnimated.hpp"
 #include <string>
 
 using namespace UR;
@@ -8,7 +9,7 @@ using namespace UR;
 class RunningMan: public game::GameObjectAnimated
 {
 	public:
-		RunningMan(std::string fileName): GameObjectAnimated(fileName)
+		RunningMan(std::string fileName): GameObjectAnimated(fileName.c_str())
 		{
 			velocity.x = 100.;
 			velocity.y = 100.;
@@ -41,20 +42,10 @@ class RunningMan: public game::GameObjectAnimated
 class App
 {
 	Renderer ur;
-	game::GameObject go; 
 public:
 	App()
 	{
 		printf("creating app\n");
-
-		game::GameObject child;
-		go.AddChild(&child);
-
-		printf("Vector Size %ld\n", go.children.size());
-		printf("Child name %s\n", go.children[0]->name.c_str());
-		printf("Child id %d\n", go.children[0]->id);
-
-		go.Update(0);
 	}
 
 	~App()
@@ -66,7 +57,6 @@ public:
 	{
 
 		RunningMan goa(std::string("assets/running-man2.bmp").c_str());
-
 		goa.sprite.animations.reserve(3);
 		goa.sprite.animations.emplace_back(Animation{.frameSize = {51, 66}, .frameCount = 6, .frameRate = 12});
 		goa.sprite.animations.emplace_back(Animation{.frameSize = {51, 66}, .frameCount = 8, .frameRate = 12});

@@ -59,9 +59,7 @@ namespace game
 		UR::PointF velocity = {0};
 		UR::Sprite sprite;
 
-		GameObjectDrawable() = default;
-
-		GameObjectDrawable(std::string bmpFile) : sprite(bmpFile.c_str())
+		GameObjectDrawable(char* bmpFile = nullptr) : sprite(bmpFile)
 		{
 			UR::setBit(tags, GameObjectType::DRAWABLE);
 		}
@@ -75,29 +73,6 @@ namespace game
 		virtual void Draw(void)
 		{
 			sprite.DrawTransparentClipped();
-		}
-	};
-
-	class GameObjectAnimated : public GameObjectDrawable
-	{
-	public:
-		UR::SpriteAnimated sprite;
-		int currentAnimation = 0;
-
-		GameObjectAnimated(std::string bmpFile) : sprite(bmpFile.c_str())
-		{
-			UR::setBit(tags, GameObjectType::ANIMATED);
-		}
-
-		void Update(double deltaTime)
-		{
-			sprite.position.x = position.x;
-			sprite.position.y = position.y;
-		}
-
-		void Draw(double deltaTime)
-		{
-			sprite.DrawTransparentAnimatedClipped(deltaTime, currentAnimation);
 		}
 	};
 } // END Game namespace

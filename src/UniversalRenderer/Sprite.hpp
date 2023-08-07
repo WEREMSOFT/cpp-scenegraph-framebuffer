@@ -16,11 +16,14 @@ namespace UR
 		PointI size = {0};
 		Color *imageData;
 
-		Sprite() = default;
-
-		Sprite(const char *file)
+		Sprite(const char *file = nullptr)
 		{
 			int nrChannels;
+			if(file == nullptr)
+			{
+				imageData = nullptr;
+				return;
+			}
 			imageData = (Color *)BMPLoad(file, &size.x, &size.y);
 			if (imageData == NULL)
 			{
@@ -32,7 +35,8 @@ namespace UR
 		~Sprite()
 		{
 			printf("destroying Sprite\n");
-			UR_FREE(imageData);
+			if(imageData != nullptr)
+				UR_FREE(imageData);
 		}
 
 		void Draw()
