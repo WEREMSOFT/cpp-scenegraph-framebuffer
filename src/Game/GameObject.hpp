@@ -55,19 +55,24 @@ namespace game
 	class GameObjectDrawable : public GameObject
 	{
 	public:
+		UR::Sprite sprite;
 		UR::PointF position = {0};
 		UR::PointF velocity = {0};
-		UR::Sprite sprite;
 
-		GameObjectDrawable(char* bmpFile = nullptr) : sprite(bmpFile)
+		GameObjectDrawable(const char* bmpFile = nullptr) : sprite(bmpFile)
 		{
 			UR::setBit(tags, GameObjectType::DRAWABLE);
 		}
 
 		virtual void Update(double deltaTime)
 		{
-			sprite.position.x = position.x;
-			sprite.position.y = position.y;
+			GetSprite().position.x = position.x;
+			GetSprite().position.y = position.y;
+		}
+
+		virtual UR::Sprite& GetSprite()
+		{
+			return sprite;
 		}
 
 		virtual void Draw(void)

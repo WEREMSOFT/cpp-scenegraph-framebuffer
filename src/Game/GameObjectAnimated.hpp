@@ -9,18 +9,11 @@ namespace game
 	class GameObjectAnimated : public GameObjectDrawable
 	{
 	public:
-		UR::SpriteAnimated sprite;
 		int currentAnimation = 0;
 
-		GameObjectAnimated(const char* bmpFile = nullptr) : sprite(bmpFile)
+		GameObjectAnimated(const char* bmpFile = nullptr) : GameObjectDrawable(bmpFile)
 		{
 			UR::setBit(tags, GameObjectType::ANIMATED);
-		}
-
-		void Update(double deltaTime)
-		{
-			sprite.position.x = position.x;
-			sprite.position.y = position.y;
 		}
 
 		void Draw(double deltaTime)
