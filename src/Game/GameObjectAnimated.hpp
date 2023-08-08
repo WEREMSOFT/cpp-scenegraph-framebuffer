@@ -11,9 +11,14 @@ namespace game
 	public:
 		int currentAnimation = 0;
 
-		GameObjectAnimated(const char* bmpFile = nullptr) : GameObjectDrawable(bmpFile)
+		GameObjectAnimated(const char *bmpFile = nullptr) : GameObjectDrawable(bmpFile)
 		{
 			UR::setBit(tags, GameObjectType::ANIMATED);
+		}
+
+		void AddAnimation(UR::Animation animation)
+		{
+			sprite.animations.emplace_back(animation);
 		}
 
 		void Draw(double deltaTime)

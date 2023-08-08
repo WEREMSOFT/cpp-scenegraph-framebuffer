@@ -8,7 +8,6 @@
 #include "Types.hpp"
 #include "Data.hpp"
 #include "Sprite.hpp"
-#include "SpriteAnimated.hpp"
 #include "ImplementationSDL2.hpp"
 
 namespace UR

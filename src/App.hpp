@@ -21,11 +21,13 @@ class RunningMan: public game::GameObjectAnimated
 			if(UR::keys[SDL_SCANCODE_LEFT])
 			{
 				position.x -= velocity.x * deltaTime;
+				sprite.isFlipped = true;
 			}
 
 			if(UR::keys[SDL_SCANCODE_RIGHT])
 			{
 				position.x += velocity.x * deltaTime;
+				sprite.isFlipped = false;
 			}
 			if(UR::keys[SDL_SCANCODE_UP])
 			{
@@ -58,9 +60,11 @@ public:
 
 		RunningMan goa(std::string("assets/running-man2.bmp").c_str());
 		goa.sprite.animations.reserve(3);
-		goa.sprite.animations.emplace_back(Animation{.frameSize = {51, 66}, .frameCount = 6, .frameRate = 12});
-		goa.sprite.animations.emplace_back(Animation{.frameSize = {51, 66}, .frameCount = 8, .frameRate = 12});
-		goa.sprite.animations.emplace_back(Animation{.frameSize = {51, 66}, .frameCount = 8, .frameRate = 3});
+		goa.AddAnimation(Animation{.frameSize = {51, 66}, .frameCount = 6, .frameRate = 12});
+		goa.AddAnimation(Animation{.frameSize = {51, 66}, .frameCount = 8, .frameRate = 12});
+		goa.AddAnimation(Animation{.frameSize = {51, 66}, .frameCount = 8, .frameRate = 3});
+
+		goa.sprite.center = (PointI){.x = 25, .y = 33};
 
 		while (UR_PROCESS_INPUT())
 		{
