@@ -254,26 +254,28 @@ namespace UR
 			{
 				animations[currentAnimationId].isPlaying = false;
 			}
-			PointI adjustedPosition = {position.x - center.x, position.y - center.y};
-			
+
+			PointI adjustedPosition = {position.x + (isFlipped?center.x:-center.x), position.y - center.y};
+
 			int clippedWidth = fmin(animations[currentAnimationId].frameSize.x,
 									fmax(0, animations[currentAnimationId].frameSize.x - (animations[currentAnimationId].frameSize.x + adjustedPosition.x -
-																							RendererCore::screenSize.y)));
+																						  RendererCore::screenSize.y)));
 			int clippedHeight = fmin(animations[currentAnimationId].frameSize.y,
-										fmax(0, animations[currentAnimationId].frameSize.y - (animations[currentAnimationId].frameSize.y + adjustedPosition.y - RendererCore::screenSize.y)));
+									 fmax(0, animations[currentAnimationId].frameSize.y - (animations[currentAnimationId].frameSize.y + adjustedPosition.y - RendererCore::screenSize.y)));
 
 			int clippedX = adjustedPosition.x < 0 ? -adjustedPosition.x : 0;
 			int clippedY = adjustedPosition.y < 0 ? -adjustedPosition.y : 0;
 
 			if (isFlipped)
 			{
+
 				for (int j = clippedY; j < clippedHeight; j++)
 				{
 					for (int i = clippedX; i < clippedWidth; i++)
 					{
 						Color color = imageData[(animationStartingY + j) * size.x + i +
-												animations[currentAnimationId].currentFrame * 
-												animations[currentAnimationId].frameSize.x];
+												animations[currentAnimationId].currentFrame *
+													animations[currentAnimationId].frameSize.x];
 
 						if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
 							UR_PUT_PIXEL(adjustedPosition.x - i, adjustedPosition.y + j, color.r, color.g, color.b);
@@ -287,8 +289,8 @@ namespace UR
 				for (int i = clippedX; i < clippedWidth; i++)
 				{
 					Color color = imageData[(animationStartingY + j) * size.x + i +
-											animations[currentAnimationId].currentFrame * 
-											animations[currentAnimationId].frameSize.x];
+											animations[currentAnimationId].currentFrame *
+												animations[currentAnimationId].frameSize.x];
 
 					if (!(color.r == 0xFF && color.b == 0xFF && color.g == 0))
 						UR_PUT_PIXEL(adjustedPosition.x + i, adjustedPosition.y + j, color.r, color.g, color.b);
