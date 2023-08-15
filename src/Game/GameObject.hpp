@@ -20,6 +20,11 @@ namespace game
 	public:
 		std::string name;
 		std::vector<GameObject *> children;
+		GameObject* parent = NULL;
+
+		UR::PointF localPosition = {0};
+		UR::PointF worldPosition = {0};
+
 		uint32_t tags;
 		static int32_t lastId;
 		int32_t id;
@@ -38,6 +43,16 @@ namespace game
 		virtual void Update(double deltaTime)
 		{
 			printf("Updating %d\n", id);
+			if(parent != NULL)
+			{
+				worldPosition.x = parent->worldPosition.x + localPosition.x;
+				worldPosition.y = parent->worldPosition.y + localPosition.y;
+			} else
+			{
+				worldPosition.x = localPosition.x;
+				worldPosition.y = localPosition.y;
+			}
+
 			for (auto child : children)
 			{
 				child->Update(deltaTime);
@@ -46,6 +61,7 @@ namespace game
 
 		void AddChild(GameObject *child)
 		{
+			child->parent = this;
 			children.push_back(child);
 		}
 	};
@@ -56,7 +72,6 @@ namespace game
 	{
 	public:
 		UR::Sprite sprite;
-		UR::PointF position = {0};
 		UR::PointF velocity = {0};
 
 		GameObjectDrawable(const char* bmpFile = nullptr) : sprite(bmpFile)
@@ -66,8 +81,10 @@ namespace game
 
 		virtual void Update(double deltaTime)
 		{
-			GetSprite().position.x = position.x;
-			GetSprite().position.y = position.y;
+			GameObject::Update(deltaTime);
+			
+			GetSprite().position.x = worldPosition.x;
+			GetSprite().position.y = worldPosition.y;
 		}
 
 		virtual UR::Sprite& GetSprite()
@@ -77,7 +94,16 @@ namespace game
 
 		virtual void Draw(void)
 		{
-			sprite.DrawTransparentClipped();
+			if(UR::isBitSet(tags, GameObjectType::DRAWABLE))
+				sprite.DrawTransparentClipped();
+
+			for (auto child : children)
+			{
+				if(UR::isBitSet(child->tags, GameObjectType::DRAWABLE))
+				{
+					((GameObjectDrawable*)child)->Draw();
+				}
+			}
 		}
 	};
 } // END Game namespace

@@ -18,25 +18,38 @@ class RunningMan: public game::GameObjectAnimated
 		void Update(double deltaTime)
 		{
 			GameObjectAnimated::Update(deltaTime);
+
+			if(UR::keysJustPressed[SDL_SCANCODE_SPACE])
+			{
+				currentAnimation++;
+				currentAnimation %= 3;
+			}
+
+			if (parent != NULL) 
+			{
+				if (UR::isBitSet(parent->tags, game::GameObjectType::DRAWABLE) || UR::isBitSet(parent->tags, game::GameObjectType::ANIMATED))
+				sprite.isFlipped = ((GameObjectDrawable*)parent)->sprite.isFlipped;
+				return;
+			}
 			if(UR::keys[SDL_SCANCODE_LEFT])
 			{
-				position.x -= velocity.x * deltaTime;
+				localPosition.x -= velocity.x * deltaTime;
 				sprite.isFlipped = true;
 			}
 
 			if(UR::keys[SDL_SCANCODE_RIGHT])
 			{
-				position.x += velocity.x * deltaTime;
+				localPosition.x += velocity.x * deltaTime;
 				sprite.isFlipped = false;
 			}
 			if(UR::keys[SDL_SCANCODE_UP])
 			{
-				position.y -= velocity.y * deltaTime;
+				localPosition.y -= velocity.y * deltaTime;
 			}
 
 			if(UR::keys[SDL_SCANCODE_DOWN])
 			{
-				position.y += velocity.y * deltaTime;
+				localPosition.y += velocity.y * deltaTime;
 			}
 		}
 };
@@ -55,9 +68,8 @@ public:
 		printf("destroying app\n");
 	}
 
-	void Run()
+	RunningMan CreateRunningMan()
 	{
-
 		RunningMan goa(std::string("assets/running-man2.bmp").c_str());
 		goa.sprite.animations.reserve(3);
 		goa.AddAnimation(Animation{.frameSize = {51, 66}, .frameCount = 6, .frameRate = 12});
@@ -65,21 +77,29 @@ public:
 		goa.AddAnimation(Animation{.frameSize = {51, 66}, .frameCount = 8, .frameRate = 3});
 
 		goa.sprite.center = (PointI){.x = 25, .y = 33};
+		return goa;
+	}
+
+	void Run()
+	{
+
+		auto goa = CreateRunningMan();
+		auto goa2 = CreateRunningMan();
+
+		goa2.localPosition.x += 10;
+		goa2.localPosition.y += 10;
+
+		goa.AddChild(&goa2);
+
 
 		while (UR_PROCESS_INPUT())
 		{
 			ur.StartFrame();
 
 			ur.DrawDemo(ur.delta);
-
-			if(UR::keysJustPressed[SDL_SCANCODE_SPACE])
-			{
-				goa.currentAnimation++;
-				goa.currentAnimation %= 3;
-			}
-
+			
 			goa.Update(ur.delta);
-			goa.Draw(ur.delta);
+			goa.Draw();
 
 			ur.EndFrame();
 		}

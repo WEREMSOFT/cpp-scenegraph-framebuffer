@@ -21,10 +21,24 @@ namespace game
 			sprite.animations.emplace_back(animation);
 		}
 
-		void Draw(double deltaTime)
+		void Update(float deltaTime)
 		{
+			GameObjectDrawable::Update(deltaTime);
+			sprite.CalculateCurrentFrame(deltaTime);
 			sprite.currentAnimationId = currentAnimation;
-			sprite.DrawTransparentAnimatedClipped(deltaTime);
+		}
+
+		void Draw()
+		{
+			sprite.DrawTransparentAnimatedClipped();
+
+			for (auto child : children)
+			{
+				if(UR::isBitSet(child->tags, GameObjectType::DRAWABLE))
+				{
+					((GameObjectDrawable*)child)->Draw();
+				}
+			}
 		}
 	};
 } // END Game namespace

@@ -236,15 +236,8 @@ namespace UR
 			}
 		}
 
-		void DrawTransparentAnimatedClipped(double deltaTime)
+		void CalculateCurrentFrame(double deltaTime)
 		{
-			if (!animations[currentAnimationId].isPlaying)
-			{
-				animations[currentAnimationId].isPlaying = true;
-			}
-
-			int animationStartingY = currentAnimationId * animations[currentAnimationId].frameSize.y;
-
 			animations[currentAnimationId].frameIncrement += deltaTime * animations[currentAnimationId].frameRate;
 			int lastFrame = animations[currentAnimationId].currentFrame;
 			animations[currentAnimationId].currentFrame = animations[currentAnimationId].frameIncrement;
@@ -254,6 +247,17 @@ namespace UR
 			{
 				animations[currentAnimationId].isPlaying = false;
 			}
+		}
+
+		void DrawTransparentAnimatedClipped()
+		{
+			if (!animations[currentAnimationId].isPlaying)
+			{
+				animations[currentAnimationId].isPlaying = true;
+			}
+
+			int animationStartingY = currentAnimationId * animations[currentAnimationId].frameSize.y;
+
 
 			PointI adjustedPosition = {position.x + (isFlipped?center.x:-center.x), position.y - center.y};
 
